@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 @Repository
 @SuppressWarnings("all")
@@ -63,8 +65,13 @@ public class BaseRepository<T> implements IBaseRepository<T> {
 	}
 
 	public List<T> find(String hql, Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = getCurrentSession().createQuery(hql);
+		if(!CollectionUtils.isEmpty(params)) {
+			for(String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.list();
 	}
 
 	public List<T> find(String hql, int page, int rows) {

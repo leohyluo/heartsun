@@ -13,8 +13,8 @@ import javax.persistence.Transient;
 import com.heartsun.constant.DataBaseConstants;
 
 
-@Entity
-@Table(name = DataBaseConstants.TABLE_WORKER2)
+/*@Entity
+@Table(name = DataBaseConstants.TABLE_WORKER2)*/
 public class Worker {
 
 	@Id
