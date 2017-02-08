@@ -60,10 +60,10 @@
     
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
     	<constructor-arg ref="clientHttpRequestFactory" />
-    	<property name="messageConverters">
+    	<!-- <property name="messageConverters">
     		<list>
     			<bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
-                <!-- <bean class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter"/> -->
+                <bean class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                     <property name="supportedMediaTypes">
@@ -73,6 +73,6 @@
                     </property>
                 </bean>
     		</list>
-    	</property>
+    	</property> -->
     </bean>
 </beans>		
