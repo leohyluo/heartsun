@@ -24,6 +24,7 @@ public class UserController {
 	@RequestMapping(value = "/getById", method = RequestMethod.POST)
 	@ResponseBody
 	public String getById() {
+		System.out.println("====================================");
 		Long id = 1L;
 		Worker worker = workerService.findById(id);
 		System.out.println(worker.getMobile());
