@@ -29,4 +29,13 @@ public class MainSymptomController {
 		System.out.println("list.size="+list.size());
 		return list;
 	}
+	
+	@RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+	@ResponseBody
+	public MainSymptom queryOne() {
+		Map<String, Object> map = new HashMap<>();
+		List<MainSymptom> list = mainSymptomService.query(map);
+		System.out.println("list.size="+list.size());
+		return list.get(0);
+	}
 }
