@@ -43,6 +43,11 @@ public abstract class AbstractService<T> implements BaseService<T> {
 	public T get(String hql, Map<String, Object> params) {
 		return getRepository().get(hql, params);
 	}
+	
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<T> get(T t) throws Exception {
+		return getRepository().find(t);
+	}
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 	public List<T> find(String hql) {

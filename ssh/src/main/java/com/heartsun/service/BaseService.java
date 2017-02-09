@@ -15,6 +15,8 @@ public interface BaseService <T> {
 	public void saveOrUpdate(T o);
 
 	public T get(String hql);
+	
+	public List<T> get(T t) throws Exception;
 
 	public T get(String hql, Map<String, Object> params);
 

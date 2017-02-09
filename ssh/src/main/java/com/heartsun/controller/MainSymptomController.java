@@ -1,8 +1,6 @@
 package com.heartsun.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,26 +14,27 @@ import com.heartsun.service.IMainSymptomService;
 
 @Controller
 @RequestMapping("/mainSymptom")
-public class MainSymptomController {
+public class MainSymptomController extends AbstractController {
 	
 	@Resource
 	private IMainSymptomService mainSymptomService;
 
-	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/queryTest", method = RequestMethod.POST)
 	@ResponseBody
-	public List<MainSymptom> query() {
-		Map<String, Object> map = new HashMap<>();
+	public List<MainSymptom> query(@RequestParam Map<String, Object> map) {
 		List<MainSymptom> list = mainSymptomService.query(map);
 		System.out.println("list.size="+list.size());
 		return list;
+	}*/
+	
+	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	@ResponseBody
+	public List<MainSymptom> query(MainSymptom m) throws Exception {
+		List<MainSymptom> list = null;
+		list = mainSymptomService.get(m);
+		System.out.println("list.size="+list.size());
+		System.out.println(1/0);
+		return list;
 	}
 	
-	@RequestMapping(value = "/queryOne", method = RequestMethod.POST)
-	@ResponseBody
-	public MainSymptom queryOne() {
-		Map<String, Object> map = new HashMap<>();
-		List<MainSymptom> list = mainSymptomService.query(map);
-		System.out.println("list.size="+list.size());
-		return list.get(0);
-	}
 }

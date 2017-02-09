@@ -26,11 +26,11 @@ public class MainSymptom {
 	@Column(name = "CM005")
 	private String sm;
 	@Column(name = "CM006")
-	private int idbh;
+	private Integer idbh;
 	@Column(name = "CM007")
-	private int total_question;
+	private Integer total_question;
 	@Column(name = "CM008")
-	private int order;
+	private Integer order;
 	@Column(name = "CM009", nullable = true)
 	private Integer sex;
 	
@@ -64,22 +64,22 @@ public class MainSymptom {
 	public void setSm(String sm) {
 		this.sm = sm;
 	}
-	public int getIdbh() {
+	public Integer getIdbh() {
 		return idbh;
 	}
-	public void setIdbh(int idbh) {
+	public void setIdbh(Integer idbh) {
 		this.idbh = idbh;
 	}
-	public int getTotal_question() {
+	public Integer getTotal_question() {
 		return total_question;
 	}
-	public void setTotal_question(int total_question) {
+	public void setTotal_question(Integer total_question) {
 		this.total_question = total_question;
 	}
-	public int getOrder() {
+	public Integer getOrder() {
 		return order;
 	}
-	public void setOrder(int order) {
+	public void setOrder(Integer order) {
 		this.order = order;
 	}
 	public Integer getSex() {

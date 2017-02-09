@@ -7,13 +7,18 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestOperations;
 
 import com.heartsun.entity.MainSymptom;
+import com.heartsun.utils.HttpUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:applicationContext-client.xml"})
@@ -26,10 +31,12 @@ public class MainSymptomControllerTest {
 	
 	@Test
 	/**
-	 * 请求一个URL返回MainSymptom数组
+	 * 璇锋眰URL杩斿洖MainSymptom鏁扮粍
 	 */
 	public void testQuery() {
-		MainSymptom[] list = restTemplate.postForObject(MAIN_SYMPTOM_QUERY, null, MainSymptom[].class);
+		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+		param.add("sex", "1");
+		MainSymptom[] list = restTemplate.postForObject(MAIN_SYMPTOM_QUERY, param, MainSymptom[].class);
 		for(MainSymptom m : list) {
 			System.out.println("mobile="+m.getName());
 		}
@@ -37,11 +44,17 @@ public class MainSymptomControllerTest {
 	
 	@Test
 	/**
-	 * 请求一个URL返回List<MainSymptom>
+	 * 璇锋眰URL杩斿洖List<MainSymptom>
 	 */
 	public void testQuery1() {
+		HttpHeaders headers = new HttpHeaders();
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+		param.add("sex", "1");
+		//param.add("sex", 1);姝ゅ啓娉曟棤娉曟敞鍏ontroller
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(param, headers);
+		
 		ParameterizedTypeReference<List<MainSymptom>> typeRef = new ParameterizedTypeReference<List<MainSymptom>>() {};
-		ResponseEntity<List<MainSymptom>> response = restTemplate.exchange(MAIN_SYMPTOM_QUERY, HttpMethod.POST, null, typeRef);
+		ResponseEntity<List<MainSymptom>> response = restTemplate.exchange(MAIN_SYMPTOM_QUERY, HttpMethod.POST, httpEntity, typeRef);
 		List<MainSymptom> list = response.getBody();
 		for(MainSymptom m : list) {
 			System.out.println(m.getName());
@@ -50,11 +63,27 @@ public class MainSymptomControllerTest {
 	
 	@Test
 	/**
-	 * 请求一个URL返回JSON数组字符串
+	 * 璇锋眰URL杩斿洖JSON鏁扮粍鐨勫瓧绗︿覆
 	 */
 	public void testQuery2() {
-		ResponseEntity<String> response = restTemplate.postForEntity(MAIN_SYMPTOM_QUERY, null, String.class);
+		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+		param.add("sex", "1");
+		ResponseEntity<String> response = restTemplate.postForEntity(MAIN_SYMPTOM_QUERY, param, String.class);
 		System.out.println(response.getBody());
 	}
 	
+	@Test
+	public void testQuery3() {
+		MainSymptom[] list = restTemplate.postForObject(MAIN_SYMPTOM_QUERY+"?sex=1", null, MainSymptom[].class);
+		for(MainSymptom m : list) {
+			System.out.println("mobile="+m.getName());
+		}
+	}
+	
+	@Test
+	public void testQuery4() {
+		long val = 37;
+		String param = "id="+val;
+		HttpUtils.doPost(MAIN_SYMPTOM_QUERY, param);
+	}
 }
