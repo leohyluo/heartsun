@@ -15,6 +15,7 @@ import org.hibernate.type.LongType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 @Repository
 @SuppressWarnings("all")
@@ -31,7 +32,7 @@ public class BaseRepository<T> implements IBaseRepository<T> {
 		this.sessionFactory = sessionFactory;
 	}
 
-	private Session getCurrentSession() {
+	protected Session getCurrentSession() {
 		return this.sessionFactory.getCurrentSession();
 	}
 	
@@ -97,6 +98,57 @@ public class BaseRepository<T> implements IBaseRepository<T> {
 				vals.add(val);
 				sb.append("and ").append(fieldName).append(" = ?");
 			}
+		}
+		Query q = getCurrentSession().createQuery(sb.toString());
+		for(int i=0; i<vals.size(); i++) {
+			q.setParameter(i, vals.get(i));
+		}
+		return q.list();
+	}
+	
+	@Override
+	public List<T> find(String hql, T t) throws Exception {
+		Class clazz = t.getClass();
+		String className = clazz.getName();
+		StringBuffer sb = new StringBuffer(hql);
+		Field[] fields = clazz.getDeclaredFields();
+		List<Object> vals = new ArrayList<>();
+		for(Field field : fields) {
+			String fieldName = field.getName();
+			String methodName = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+			Method method = clazz.getMethod(methodName);
+			Object val = method.invoke(t);
+			if(val != null) {
+				vals.add(val);
+				sb.append("and ").append(fieldName).append(" = ?");
+			}
+		}
+		Query q = getCurrentSession().createQuery(sb.toString());
+		for(int i=0; i<vals.size(); i++) {
+			q.setParameter(i, vals.get(i));
+		}
+		return q.list();
+	}
+	
+	@Override
+	public List<T> find(String hql, String orderBy, T t, List<Object> baseArgs) throws Exception {
+		Class clazz = t.getClass();
+		StringBuffer sb = new StringBuffer(hql);
+		Field[] fields = clazz.getDeclaredFields();
+		List<Object> vals = new ArrayList<>();
+		vals.addAll(baseArgs);
+		for(Field field : fields) {
+			String fieldName = field.getName();
+			String methodName = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+			Method method = clazz.getMethod(methodName);
+			Object val = method.invoke(t);
+			if(val != null) {
+				vals.add(val);
+				sb.append("and ").append(fieldName).append(" = ?");
+			}
+		}
+		if(!StringUtils.isEmpty(orderBy)) {
+			sb.append(" order by ").append(orderBy);
 		}
 		Query q = getCurrentSession().createQuery(sb.toString());
 		for(int i=0; i<vals.size(); i++) {

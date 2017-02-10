@@ -24,6 +24,10 @@ public interface IBaseRepository<T> {
 	public List<T> find(String hql);
 
 	public List<T> find(String hql, Map<String, Object> params);
+
+	public List<T> find(String hql, T t) throws Exception;
+	
+	public List<T> find(String hql, String orderBy, T t, List<Object> baseArgs) throws Exception;
 	
 	public List<T> find(T t) throws Exception;
 
