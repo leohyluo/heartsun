@@ -70,18 +70,11 @@ public class BaseRepository<T> implements IBaseRepository<T> {
 	}
 
 	public List<T> find(String hql, Map<String, Object> params) {
-		StringBuffer sb = new StringBuffer(hql);
-		if(!CollectionUtils.isEmpty(params)) {
-			for(String key : params.keySet()) {
-				sb.append(" and ").append(key).append(" = ").append(":").append(key);
-			}
-		}
-		Query q = getCurrentSession().createQuery(sb.toString());
+		Query q = getCurrentSession().createQuery(hql);
 		if(!CollectionUtils.isEmpty(params)) {
 			for(String key : params.keySet()) {
 				Object val = params.get(key);
 				q.setParameter(key, val);
-				//q.setLong(key, Long.valueOf(val.toString()));
 			}
 		}
 		return q.list();

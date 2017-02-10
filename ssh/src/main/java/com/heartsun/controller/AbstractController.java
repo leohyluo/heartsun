@@ -35,5 +35,7 @@ public class AbstractController {
 	public void handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("error happened======================");
 		logger.warn(ex.getMessage());
+		logger.error("error happen ", ex);
+		ex.printStackTrace();
 	}
 }
