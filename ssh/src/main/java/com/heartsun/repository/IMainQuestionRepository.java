@@ -6,5 +6,5 @@ import com.heartsun.entity.MainQuestion;
 
 public interface IMainQuestionRepository {
 
-	public List<MainQuestion> query(String mainId, MainQuestion param) throws Exception;
+	public List<MainQuestion> query(Long mainId, String doctorFlag, MainQuestion param) throws Exception;
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -23,12 +24,19 @@ public class MainQuestionControllerTest {
 	
 	@Resource
 	private RestOperations restTemplate;
-	
+	@Test
 	public void testQuery() {
-		String uri = QUERY + "/1";
+		String uri = QUERY + "/2/0";
 		ParameterizedTypeReference<List<MainQuestion>> typeRef = new ParameterizedTypeReference<List<MainQuestion>>() {};
+		System.out.println("=============================>");
 		ResponseEntity<List<MainQuestion>> response = restTemplate.exchange(uri, HttpMethod.POST, null, typeRef);
 		List<MainQuestion> list = response.getBody();
 		System.out.println(list.size());
+		int i = 1;
+		for(MainQuestion item : list) {
+			System.out.println(i+":"+item.getQuestion());
+			i++;
+		}
 	}
+	
 }

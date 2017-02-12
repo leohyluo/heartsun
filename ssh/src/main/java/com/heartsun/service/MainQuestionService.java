@@ -1,5 +1,6 @@
 package com.heartsun.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,13 +19,16 @@ public class MainQuestionService extends AbstractService<MainQuestion> implement
 	private MainQuestionRepository questionRepository;
 
 	@Override
-	public List<MainQuestion> query(String mainId, MainQuestion param) throws Exception {
+	public List<MainQuestion> query(Long mainId, String doctorFlag, MainQuestion param) throws Exception {
 		// TODO Auto-generated method stub
-		List<MainQuestion> list = questionRepository.query(mainId, param);
+		List<MainQuestion> list = questionRepository.query(mainId, doctorFlag, param);
+		List<MainQuestion> targetList = new ArrayList<>();
 		for(MainQuestion item : list) {
-			item.setQuestion(QEncodeUtil.decrypt(item.getQuestion()));
+			MainQuestion target = item;
+			target.setQuestion(QEncodeUtil.decrypt(target.getQuestion()));
+			targetList.add(target);
 		}
-		return list;
+		return targetList;
 	}
 	
 	@Override

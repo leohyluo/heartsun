@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.heartsun.constant.DataBaseConstants;
 
 @Entity
@@ -22,6 +23,7 @@ public class MainQuestion {
 	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CM002")
+	@JsonIgnore
 	private MainSymptom mainSymptom;
 	@Column(name = "CM003")
 	private String question;
