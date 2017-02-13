@@ -9,9 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.heartsun.constant.DataBaseConstants;
+import com.heartsun.utils.QEncodeUtil;
 
 @Entity
 @Table(name = DataBaseConstants.MAIN_QUESTION)
@@ -26,6 +30,7 @@ public class MainQuestion {
 	@JsonIgnore
 	private MainSymptom mainSymptom;
 	@Column(name = "CM003")
+	@JsonIgnore
 	private String question;
 	@Column(name = "CM004")
 	private String questionType;
@@ -35,6 +40,8 @@ public class MainQuestion {
 	private String isdoctor;
 	@Column(name = "CM007")
 	private Integer gender;
+	@Transient
+	private String decodeQuestion;
 	
 	public Long getId() {
 		return id;
@@ -77,5 +84,18 @@ public class MainQuestion {
 	}
 	public void setGender(Integer gender) {
 		this.gender = gender;
+	}
+	public String getDecodeQuestion() {
+		if(StringUtils.isEmpty(this.decodeQuestion) && !StringUtils.isEmpty(this.question)) {
+			try {
+				return QEncodeUtil.decrypt(this.question);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return decodeQuestion;
+	}
+	public void setDecodeQuestion(String decodeQuestion) {
+		this.decodeQuestion = decodeQuestion;
 	}
 }

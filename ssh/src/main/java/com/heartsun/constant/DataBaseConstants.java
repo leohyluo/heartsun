@@ -15,6 +15,12 @@ public final class DataBaseConstants {
 	public static final String MAIN_SYMPTOM = "TM001";
 	//主症状问题表
 	public static final String MAIN_QUESTION = "TM002";
+	//答案基础表
+	public static final String BASIC_ANSWER = "TM003";
+	//问题答案关系表
+	public static final String QUESTION_AND_ANSWER = "TM004";
+	//疾病表
+	public static final String EBM_DISEASE = "TM005";
 	//身体部位表
 	public static final String BODY = "TM013";
 	//身体主症状关系表

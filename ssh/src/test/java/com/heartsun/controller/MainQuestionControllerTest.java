@@ -24,17 +24,33 @@ public class MainQuestionControllerTest {
 	
 	@Resource
 	private RestOperations restTemplate;
+	/**
+	 * 查询主症状id为2,患者版的问题
+	 */
 	@Test
 	public void testQuery() {
 		String uri = QUERY + "/2/0";
 		ParameterizedTypeReference<List<MainQuestion>> typeRef = new ParameterizedTypeReference<List<MainQuestion>>() {};
-		System.out.println("=============================>");
 		ResponseEntity<List<MainQuestion>> response = restTemplate.exchange(uri, HttpMethod.POST, null, typeRef);
 		List<MainQuestion> list = response.getBody();
-		System.out.println(list.size());
 		int i = 1;
 		for(MainQuestion item : list) {
-			System.out.println(i+":"+item.getQuestion());
+			System.out.println(i+":"+item.getDecodeQuestion());
+			i++;
+		}
+	}
+	/**
+	 * 查询主症状id为2,医生版的问题
+	 */
+	@Test
+	public void testQuery2() {
+		String uri = QUERY + "/2/1";
+		ParameterizedTypeReference<List<MainQuestion>> typeRef = new ParameterizedTypeReference<List<MainQuestion>>() {};
+		ResponseEntity<List<MainQuestion>> response = restTemplate.exchange(uri, HttpMethod.POST, null, typeRef);
+		List<MainQuestion> list = response.getBody();
+		int i = 1;
+		for(MainQuestion item : list) {
+			System.out.println(i+":"+item.getDecodeQuestion());
 			i++;
 		}
 	}
