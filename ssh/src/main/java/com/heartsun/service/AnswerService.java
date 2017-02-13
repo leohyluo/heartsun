@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.heartsun.entity.BasicAnswer;
+import com.heartsun.entity.QuestionAndAnswer;
 import com.heartsun.repository.AnswerRepository;
 import com.heartsun.repository.BaseRepository;
 
@@ -17,11 +18,11 @@ public class AnswerService extends AbstractService<BasicAnswer> implements IAnsw
 	private AnswerRepository answerRepository;
 	
 	@Override
-	public List<BasicAnswer> query(Long mainId, Integer questionNum, String isDoctor) {
+	public List<QuestionAndAnswer> query(Long mainId, Integer questionNum, String isDoctor) {
 		// TODO Auto-generated method stub
-		List<BasicAnswer> list = answerRepository.query(mainId, questionNum, isDoctor);
-		for(BasicAnswer item : list) {
-			item.setDecodeAnswerContent();
+		List<QuestionAndAnswer> list = answerRepository.query(mainId, questionNum, isDoctor);
+		for(QuestionAndAnswer item : list) {
+			item.getBasicAnswer().setDecodeAnswerContent();
 		}
 		return list;
 	}

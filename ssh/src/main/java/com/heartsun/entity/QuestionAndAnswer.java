@@ -28,10 +28,9 @@ public class QuestionAndAnswer {
 	@Column(name = "CM003")
 	private String diseaseName; //疾病名称
 	
-	/*@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CM004")*/
-	@Column(name = "CM004")
-	private Long answerId; //TM003的cm002关联
+	@ManyToOne(targetEntity = BasicAnswer.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "CM004", referencedColumnName = "CM002")
+	private BasicAnswer basicAnswer; //TM003的cm002关联
 	
 	@Column(name = "CM005")
 	private Integer questionNum; //第几个问题
@@ -70,12 +69,12 @@ public class QuestionAndAnswer {
 		this.diseaseName = diseaseName;
 	}
 
-	public Long getAnswerId() {
-		return answerId;
+	public BasicAnswer getBasicAnswer() {
+		return basicAnswer;
 	}
 
-	public void setAnswer(Long answerId) {
-		this.answerId = answerId;
+	public void setAnswer(BasicAnswer basicAnswer) {
+		this.basicAnswer = basicAnswer;
 	}
 
 	public Integer getQuestionNum() {

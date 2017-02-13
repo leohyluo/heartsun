@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.heartsun.entity.BasicAnswer;
+import com.heartsun.entity.QuestionAndAnswer;
 import com.heartsun.service.IAnswerService;
 
 @Controller
@@ -26,8 +27,8 @@ public class AnswerController extends AbstractController {
 	
 	@RequestMapping(value = "/query/{mainId}/{questionNum}/{isDoctor}", method = RequestMethod.POST)
 	@ResponseBody
-	public List<BasicAnswer> query(@PathVariable Long mainId,@PathVariable Integer questionNum, @PathVariable String isDoctor) {
-		List<BasicAnswer> list = answerService.query(mainId, questionNum, isDoctor);
+	public List<QuestionAndAnswer> query(@PathVariable Long mainId,@PathVariable Integer questionNum, @PathVariable String isDoctor) {
+		List<QuestionAndAnswer> list = answerService.query(mainId, questionNum, isDoctor);
 		logger.info("answer size = " + list.size());
 		return list;
 	}
