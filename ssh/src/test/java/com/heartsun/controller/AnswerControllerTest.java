@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestOperations;
 
 import com.heartsun.entity.QuestionAndAnswer;
+import com.heartsun.entity.resultset.AnswerPojo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:applicationContext-client.xml"})
@@ -28,12 +29,12 @@ public class AnswerControllerTest {
 	@Test
 	public void testQuery() {
 		String uri = ANSWER_QUERY + "/2/1/1";
-		ParameterizedTypeReference<List<QuestionAndAnswer>> typeReference = new ParameterizedTypeReference<List<QuestionAndAnswer>>() {};
-		ResponseEntity<List<QuestionAndAnswer>> response = restTemplate.exchange(uri, HttpMethod.POST, null, typeReference);
-		List<QuestionAndAnswer> list = response.getBody();
+		ParameterizedTypeReference<List<AnswerPojo>> typeReference = new ParameterizedTypeReference<List<AnswerPojo>>() {};
+		ResponseEntity<List<AnswerPojo>> response = restTemplate.exchange(uri, HttpMethod.POST, null, typeReference);
+		List<AnswerPojo> list = response.getBody();
 		int i = 1;
-		for(QuestionAndAnswer item : list) {
-			System.out.println("====>" +i +":"+item.getId() +":"+ item.getBasicAnswer().getDecodeAnswerContent());
+		for(AnswerPojo item : list) {
+			System.out.println("====>" +i +":" + item.getAnswerText()+"("+item.getNormalDiseaseCount()+"/"+item.getDiseaseNum()+")");
 			i++;
 		}
 	}

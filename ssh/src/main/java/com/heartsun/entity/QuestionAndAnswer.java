@@ -1,5 +1,6 @@
 package com.heartsun.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class QuestionAndAnswer {
 	@Column(name = "CM003")
 	private String diseaseName; //疾病名称
 	
-	@ManyToOne(targetEntity = BasicAnswer.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = BasicAnswer.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "CM004", referencedColumnName = "CM002")
 	private BasicAnswer basicAnswer; //TM003的cm002关联
 	
