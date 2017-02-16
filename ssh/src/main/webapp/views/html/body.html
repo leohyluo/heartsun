@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Textinput - jQuery Mobile Demos</title>
+    <link rel="stylesheet" href="../../resource/jqm/jquery.mobile-1.4.5.min.css">
+    <link rel="shortcut icon" href="../../resource/jqm/images/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="../../resource/js/jquery/jquery.js"></script>
+    <script src="../../resource/jqm/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$.ajax({
+    			url:'../../body/query',
+    			type:'post',
+    			success:function(data){
+    				var current = 1;
+    				$.each(data, function(i,d){
+    					var className = '';
+    					if(current % 1 == 0) {
+    						className = 'ui-block-a';
+    					}
+    					if(current % 2 == 0) {
+    						className = 'ui-block-b';
+    					} else if (current % 3 == 0) {
+    						className = 'ui-block-c';
+    						current = 1;
+    					}
+    					var item = '<div class="'+className+'"><a href="#" class="ui-shadow ui-btn ui-corner-all">'+d.name+'</a></div>';
+    					$('#div_body_container').append(item);
+    					current++;
+    				})
+    			},
+    			dataType:'json'
+    		})
+    	})
+    </script>
+</head>
+<body>
+	<div data-role="page" class="jqm-demos" data-quicklinks="true">
+		<div data-role="main" class="ui-content jqm-content">
+			<div class="ui-grid-b" id="div_body_container">
+				<!-- <div class="ui-block-a">
+					<a href="#" class="ui-shadow ui-btn ui-corner-all">Anchor</a>
+				</div>
+				<div class="ui-block-b">
+					<a href="#" class="ui-shadow ui-btn ui-corner-all">Anchor</a>
+				</div>
+				<div class="ui-block-c">
+					<a href="#" class="ui-shadow ui-btn ui-corner-all">Anchor</a>
+				</div> -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>
